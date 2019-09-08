@@ -1,0 +1,67 @@
+<html>
+   <head>
+      <link rel = "stylesheet"
+         type = "text/css"
+         href = "feed_styling.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script> 
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-debug.js" integrity="sha256-M5ZomNNnrnEB2WjSbnty5GWGqq6UuAAVNnWECisgEis=" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="feed_script.js"></script>
+   </head>
+   <body>
+      <h1>
+         Feed
+      </h1>
+      <div class="search-sort-container">
+         <div class="search-container">
+            <input placeholder="Search..." class="search-input" data-bind="value: searchQuery, valueUpdate:'afterkeydown'"/>
+         </div>
+         <div class="sort-container">
+            <select class="search-input" data-bind="options: sortByList, value: sortBy"></select>
+         </div>
+      </div>
+      <!-- ko if: currentList() && currentList().length -->
+      <div class="image-list-container" data-bind="foreach: currentList() ">
+         <div class="card-item">
+            <img class="card-image" data-bind="attr:{src: $data.image}">
+            </img>
+            <div class="card-title" data-bind="text: $data.name"></div>
+            <div class="card-description" data-bind="text: $data.description">
+               Lorem ipsum
+            </div>
+         </div>
+      </div>
+      <div class="pagination-list">
+		<div class="pagination-number-container" data-bind="foreach: numberOfPagesArray()">
+         		<div data-bind="css: { 'selected-page': $parent.currentPage() === $data },text: $data , click: function(){$parent.updateCurrentPage($data);}" class="pagination-item"></div>
+		</div>      
+      </div>
+      <h1>Tabular Display</h1>
+      <div class ="table-container">
+         <table>
+            <thead>
+               <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Image Source</th>
+                  <th>Date</th>
+               </tr>
+            </thead>
+            <tbody data-bind="foreach: currentList()">
+               <tr>
+                  <td data-bind="text: $data.name">&nbsp;&nbsp;&nbsp;</td>
+                  <td data-bind="text: $data.description">&nbsp;&nbsp;&nbsp;</td>
+                  <td data-bind="text: $data.image">&nbsp;&nbsp;&nbsp;</td>
+                  <td data-bind="text: $data.dateLastEdited">&nbsp;&nbsp;&nbsp;</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <!-- /ko -->
+
+      <!-- ko if: !currentList() || !currentList().length -->
+	<div class="no-result-message">
+		No results to display
+	</div>
+      <!-- /ko -->
+   </body>
+</html>
